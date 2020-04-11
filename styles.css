@@ -35,6 +35,10 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_filter label 
 #wrap-funtions > *:not(:first-child) {
     margin-left: 15px;
 }
+#wrap-docs {
+    margin-top: 8px;
+    text-align: center;
+}
 .flex-wrap-controls {
     display: flex;
     align-items: center;
@@ -53,3 +57,4 @@ td.details-control {
 table.table-nhom-lop thead tr th {
     text-align: center;
 }
+

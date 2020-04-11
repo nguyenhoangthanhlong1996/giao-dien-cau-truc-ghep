@@ -167,8 +167,11 @@ $(document).ready(function () {
 				<"col-sm-12"t>
 			>
 			<"row"
-				<"col-sm-6"i>
-				<"col-sm-6"p>
+                <"col-sm-3"i>
+                <"col-sm-6"
+                    <"#wrap-docs">
+                >
+				<"col-sm-3"p>
 			>`,
     });
 
@@ -177,24 +180,31 @@ $(document).ready(function () {
             $('#dropDownThaoTac').prop('outerHTML') +
             $('#tuyChonHienThiCot').prop('outerHTML')
     );
+    $('#wrap-docs').html('Nhấn đúp chuột vào 1 ô trong bảng để sửa giá trị tại ô đó');
 
     $('#select-all').on('change', function () {
         checkBoxChonTatCaThayDoi();
     });
 
+    // Xử lý sự kiện đóng / mở nhóm lớp
     $('#tblTachGhep tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = tblTachGhep.row(tr);
- 
-        if ( row.child.isShown() ) {
+
+        if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
-            $(this).find('i').addClass('fa-plus-square text-primary').removeClass('fa-minus-square text-success');
-        }
-        else {
+            $(this)
+                .find('i')
+                .addClass('fa-plus-square text-primary')
+                .removeClass('fa-minus-square text-success');
+        } else {
             // Open this row
             row.child($('#tblNhomLop').prop('outerHTML')).show();
-            $(this).find('i').addClass('fa-minus-square text-success').removeClass('fa-plus-square text-primary');
+            $(this)
+                .find('i')
+                .addClass('fa-minus-square text-success')
+                .removeClass('fa-plus-square text-primary');
         }
     });
 
@@ -206,6 +216,31 @@ $(document).ready(function () {
             soDongDuocChonThayDoi();
         }
     );
+
+    $('#tblTachGhep').on('dblclick', 'tbody td', function () {
+        let cell = tblTachGhep.cell(this);
+        const td = $(cell.node());
+        if (!td.hasClass('editing')) {
+            const value = cell.data();
+            cell.data(`<input type="text"/>`).draw();
+            td.addClass('editing');
+            td.find('input').focus().val(value);
+        }
+    });
+
+    $('#tblTachGhep').on('keypress', 'tbody td.editing', function (e) {
+        if (e.keyCode == 13) {
+            const cell = tblTachGhep.cell(this);
+            const td = $(cell.node());
+            const value = td.find('input').val();
+            cell.data(value.trim() ? value : null).draw();
+            td.removeClass('editing');
+        }
+    });
+
+    $('#tblTachGhep').on('focusout', 'tbody td.editing input', function (e) {
+        $(this).trigger(jQuery.Event('keypress', { keyCode: 13 }));
+    });
 
     // Xử lý sự kiện ẩn hiện cột
     $('#tuyChonHienThiCot').on('change', 'input[type="checkbox"]', function () {
@@ -237,7 +272,7 @@ $(document).ready(function () {
                         22,
                         23,
                         24,
-                        25
+                        25,
                     ])
                     .visible(isChecked);
                 break;
@@ -281,7 +316,7 @@ $(document).ready(function () {
                         61,
                         62,
                         63,
-                        64
+                        64,
                     ])
                     .visible(isChecked);
                 break;
@@ -337,18 +372,20 @@ function checkBoxChonTatCaThayDoi() {
 }
 
 function htmlBangNhomLop(id) {
-    return '<table class="table table-bordered">'+
-        '<tr>'+
-            '<td>Full name:</td>'+
-            '<td>ABC</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>DEF</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
+    return (
+        '<table class="table table-bordered">' +
+        '<tr>' +
+        '<td>Full name:</td>' +
+        '<td>ABC</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>Extension number:</td>' +
+        '<td>DEF</td>' +
+        '</tr>' +
+        '<tr>' +
+        '<td>Extra info:</td>' +
+        '<td>And any further details here (images etc)...</td>' +
+        '</tr>' +
+        '</table>'
+    );
 }
