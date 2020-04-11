@@ -1,0 +1,55 @@
+#tblTachGhep {
+    border-collapse: collapse !important;
+}
+/* #tblTachGhep thead tr th, tfoot tr th {
+    text-align: center;
+    border-bottom: none;
+} */
+#tblTachGhep tr td:first-child {
+    text-align: center;
+}
+#tblTachGhep thead > tr:nth-child(2) > th:last-child {
+    border-right-width: 1px;
+}
+.dataTables_scrollHeadInner table thead tr th {
+    text-align: center;
+    border-bottom: none;
+}
+.dataTables_filter label input {
+   width: 250px !important;
+}
+div.dataTables_wrapper div.dataTables_length label, div.dataTables_filter label {
+    margin-bottom: 0;
+}
+.wrapper {
+    margin-top: 20px;
+    font-size: 14px !important;
+    font-family: 'Roboto Condensed';
+}
+#wrap-funtions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 30px;
+}
+#wrap-funtions > *:not(:first-child) {
+    margin-left: 15px;
+}
+.flex-wrap-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.flex-wrap-controls div{
+    /* margin-right: 40px; */
+}
+.flex-wrap-controls .dataTables_length select {
+    width: 80px !important;
+}
+td.details-control {
+    cursor: pointer;
+    text-align: center;
+}
+table.table-nhom-lop thead tr th {
+    text-align: center;
+}

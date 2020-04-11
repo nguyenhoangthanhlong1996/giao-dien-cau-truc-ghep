@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tách ghép Môn học</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+    <link rel="stylesheet" href="dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.0/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700,300italic,400italic">
+    <link rel="stylesheet" href="styles.css">
+    <!-- JS -->
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="jquery.dataTables.min.js"></script>
+    <script src="dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="jquery.hotkeys.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div class="wrapper container-fluid">
+        <table id="tblTachGhep" class="table table-bordered table-hover table-striped" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th rowspan="3"><span>(Ctrl + [Shift] + A)</span></br><input id="select-all" type="checkbox"></th>
+                    <th rowspan="3">Nhóm</th>
+                    <th rowspan="3" style="min-width: 200px;">Môn học</th>
+                    <th rowspan="3">Loại hình lớp</th>
+                    <th rowspan="3">Tổng số tiết</th>
+                    <th colspan="5">Sĩ số</th>
+                    <th colspan="16">Chia tiết TKB</th>
+                    <th colspan="4">Chỉ định Giảng viên</th>
+                    <th colspan="35">Chỉ định tuần</th>
+                </tr>
+                <tr>
+                    <th rowspan="2">Tối thiểu</th>
+                    <th rowspan="2">Tối đa</th>
+                    <th rowspan="2">Dao động (+ -)</th>
+                    <th rowspan="2">Dự kiến</th>
+                    <th rowspan="2">Thực tế</th>
+                    <th rowspan="2">Tiết/Tuần</th>
+                    <th rowspan="2">Nhóm phòng</th>
+                    <th colspan="14">Số tiết / Lần gặp</th>
+                    <th rowspan="2">Mã GV</th>
+                    <th rowspan="2">Thứ</th>
+                    <th rowspan="2">Tiết bắt đầu</th>
+                    <th rowspan="2">Mã Phòng</th>
+                    <th rowspan="2">Tuần bắt đầu</th>
+                    <th rowspan="2">Tuần kết thúc</th>
+                    <th rowspan="2">Cho phép dịch tuần</th>
+                    <th colspan="32">Tuần học</th>
+                </tr>
+                <tr>
+                    <th>PT1</th>
+                    <th>PT2</th>
+                    <th>PT3</th>
+                    <th>PT4</th>
+                    <th>PT5</th>
+                    <th>PT6</th>
+                    <th>PT7</th>
+                    <th>PT8</th>
+                    <th>PT9</th>
+                    <th>PT10</th>
+                    <th>PT11</th>
+                    <th>PT12</th>
+                    <th>PT13</th>
+                    <th>PT14</th>
+                    <th>T1</th>
+                    <th>T2</th>
+                    <th>T3</th>
+                    <th>T4</th>
+                    <th>T5</th>
+                    <th>T6</th>
+                    <th>T7</th>
+                    <th>T8</th>
+                    <th>T9</th>
+                    <th>T10</th>
+                    <th>T11</th>
+                    <th>T12</th>
+                    <th>T13</th>
+                    <th>T14</th>
+                    <th>T15</th>
+                    <th>T16</th>
+                    <th>T17</th>
+                    <th>T18</th>
+                    <th>T19</th>
+                    <th>T20</th>
+                    <th>T21</th>
+                    <th>T22</th>
+                    <th>T23</th>
+                    <th>T24</th>
+                    <th>T25</th>
+                    <th>T26</th>
+                    <th>T27</th>
+                    <th>T28</th>
+                    <th>T29</th>
+                    <th>T30</th>
+                    <th>T31</th>
+                    <th>T32</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <!-- <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Môn học</th>
+                    <th>Loại hình lớp</th>
+                    <th>Tổng số tiết</th>
+                    <th colspan='5'>Sĩ số</th>
+                    <th>Lớp thành phần</th>
+                    <th colspan='2'>Nhóm</th>
+                </tr>
+            </tfoot> -->
+        </table>
+        <!-- Các controls sẽ tùy biến vào DataTable -->
+        <div style="display: none;">
+            <div id="dropDownThaoTac" class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">Thao tác (F1) <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Thêm mới Môn học (F3)</a></li>
+                    <li><a href="#">Xóa môn học (Del)</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Tạo nhóm tự động (F4)</a></li>
+                    <li><a href="#">Tách nhóm (F6)</a></li>
+                    <li><a href="#">Ghép nhóm (F7)</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Chia tiết TKB (F8)</a></li>
+                </ul>
+            </div>
+            <div id="tuyChonHienThiCot">
+                <span>Hiển thị cột: </span>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="tongSoTiet">Tổng số tiết</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="siSo">Sĩ số</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiaTietTKB">Chia tiết TKB</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiDinhGV">Chỉ định Giảng viên</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiDinhTuan">Chỉ định tuần</label>
+                </div>
+            </div>
+            <span id="soDongDuocChon"><span class="giaTri" style="font-weight: bold;">0</span> Dòng đang được chọn</span>
+            <table id="tblNhomLop" class="table table-bordered table-striped table-nhom-lop" style="max-width: 500px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Mã nhóm</th>
+                        <th>Sĩ số</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>A01</td>
+                        <td>45</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>A02</td>
+                        <td>60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
