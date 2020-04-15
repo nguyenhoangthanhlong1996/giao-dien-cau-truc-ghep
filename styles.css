@@ -1,15 +1,48 @@
-#tblTachGhep {
-    border-collapse: collapse !important;
+.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(-n+3) {
+    position: sticky;
+    background-color: white;
+    z-index: 2;
 }
-/* #tblTachGhep thead tr th, tfoot tr th {
-    text-align: center;
-    border-bottom: none;
-} */
+.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(1) {
+    left: 0;
+}
+.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(2) {
+    left: 52px;
+}
+.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(3) {
+    left: 120px;
+}
 #tblTachGhep tr td:first-child {
     text-align: center;
 }
 #tblTachGhep thead > tr:nth-child(2) > th:last-child {
     border-right-width: 1px;
+}
+#tblTachGhep > tbody > tr > td {
+    padding: 5px;
+    vertical-align: middle;
+}
+#tblTachGhep > tbody > tr > td:not(:nth-child(-n+3)) {
+    text-align: center;
+}
+#tblTachGhep > tbody > tr > td:nth-child(-n+3) {
+    position: sticky;
+    z-index: 2;
+}
+#tblTachGhep > tbody > tr:nth-child(odd) > td:nth-child(-n+3) {
+    background-color: #f9f9f9;
+}
+#tblTachGhep > tbody > tr:nth-child(even) > td:nth-child(-n+3) {
+    background-color: white;
+}
+#tblTachGhep > tbody > tr > td:nth-child(1) {
+    left: 0;
+}
+#tblTachGhep > tbody > tr > td:nth-child(2) {
+    left: 52px;
+}
+#tblTachGhep > tbody > tr > td:nth-child(3) {
+    left: 120px;
 }
 .dataTables_scrollHeadInner table thead tr th {
     text-align: center;
@@ -44,9 +77,6 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_filter label 
     align-items: center;
     margin-bottom: 10px;
 }
-.flex-wrap-controls div{
-    /* margin-right: 40px; */
-}
 .flex-wrap-controls .dataTables_length select {
     width: 80px !important;
 }
@@ -57,4 +87,11 @@ td.details-control {
 table.table-nhom-lop thead tr th {
     text-align: center;
 }
-
+input.input-integer {
+    width: 50px;
+    text-align: center;
+}
+input.input-text {
+    width: 80px;
+    text-align: left;
+}

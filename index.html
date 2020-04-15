@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="font-awesome.min.css">
     <link rel="stylesheet" href="dataTables.bootstrap.min.css">
+    <!-- <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.0/css/fixedColumns.dataTables.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700,300italic,400italic">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700,300italic,400italic">
     <link rel="stylesheet" href="styles.css">
     <!-- JS -->
     <script src="jquery.min.js"></script>
     <script src="bootstrap.min.js"></script>
     <script src="jquery.dataTables.min.js"></script>
     <script src="dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="jquery.hotkeys.js"></script>
     <script src="script.js"></script>
 </head>
@@ -28,8 +28,9 @@
         <table id="tblTachGhep" class="table table-bordered table-hover table-striped" style="width: 100%;">
             <thead>
                 <tr>
-                    <th rowspan="3"><span>(Ctrl + [Shift] + A)</span></br><input id="select-all" type="checkbox"></th>
-                    <th rowspan="3">Nhóm</th>
+                    <th rowspan="3" style="width: 35px;"><span>(Ctrl + [Shift] + A)</span></br><input id="select-all"
+                            type="checkbox"></th>
+                    <th rowspan="3" style="width: 53px;">Nhóm</br><a id="nhomCollapseAll" href="#">Đóng/mở</a></i></th>
                     <th rowspan="3" style="min-width: 200px;">Môn học</th>
                     <th rowspan="3">Loại hình lớp</th>
                     <th rowspan="3">Tổng số tiết</th>
@@ -44,8 +45,8 @@
                     <th rowspan="2">Dao động (+ -)</th>
                     <th rowspan="2">Dự kiến</th>
                     <th rowspan="2">Thực tế</th>
-                    <th rowspan="2">Tiết/Tuần</th>
                     <th rowspan="2">Nhóm phòng</th>
+                    <th rowspan="2">Tiết/Tuần</th>
                     <th colspan="14">Số tiết / Lần gặp</th>
                     <th rowspan="2">Mã GV</th>
                     <th rowspan="2">Thứ</th>
@@ -137,28 +138,63 @@
             <div id="tuyChonHienThiCot">
                 <span>Hiển thị cột: </span>
                 <div class="form-check checkbox-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="tongSoTiet">Tổng số tiết</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkTongSoTiet">Tổng số tiết</label>
                 </div>
                 <div class="form-check checkbox-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="siSo">Sĩ số</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" id="checkSiSo">Sĩ
+                        số</label>
                 </div>
                 <div class="form-check checkbox-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiaTietTKB">Chia tiết TKB</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkChiaTietTKB">Chia tiết TKB</label>
                 </div>
                 <div class="form-check checkbox-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiDinhGV">Chỉ định Giảng viên</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkChiaTiet_PT6_PT14">Chia tiết (PT6 - PT14)</label>
                 </div>
                 <div class="form-check checkbox-inline">
-                    <label class="form-check-label"><input class="form-check-input" type="checkbox" value="chiDinhTuan">Chỉ định tuần</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkChiDinhGV">Chỉ định Giảng viên</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkChiDinhTuan">Chỉ định tuần</label>
+                </div>
+                <div class="form-check checkbox-inline">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                            id="checkChiDinhTuan_T16_T32">Chỉ định tuần (T16 - T32)</label>
                 </div>
             </div>
-            <span id="soDongDuocChon"><span class="giaTri" style="font-weight: bold;">0</span> Dòng đang được chọn</span>
-            <table id="tblNhomLop" class="table table-bordered table-striped table-nhom-lop" style="max-width: 500px; width: 100%;">
+            <span id="soDongDuocChon"><span class="giaTri" style="font-weight: bold;">0</span> Dòng đang được
+                chọn</span>
+            <table id="tblNhomLop" class="table table-bordered table-striped table-nhom-lop"
+                style="max-width: 1000px; width: 100%;">
                 <thead>
                     <tr>
                         <th><input type="checkbox"></th>
                         <th>Mã nhóm</th>
                         <th>Sĩ số</th>
+                        <th>Mã GV</th>
+                        <th>Thứ</th>
+                        <th>Tiết bắt đầu</th>
+                        <th>Số tiết</th>
+                        <th>Mã phòng</th>
+                        <th>T1</th>
+                        <th>T2</th>
+                        <th>T3</th>
+                        <th>T4</th>
+                        <th>T5</th>
+                        <th>T6</th>
+                        <th>T7</th>
+                        <th>T8</th>
+                        <th>T9</th>
+                        <th>T10</th>
+                        <th>T11</th>
+                        <th>T12</th>
+                        <th>T13</th>
+                        <th>T14</th>
+                        <th>T15</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,11 +202,51 @@
                         <td><input type="checkbox"></td>
                         <td>A01</td>
                         <td>45</td>
+                        <td>0012345</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>C04 - 203</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>A02</td>
-                        <td>60</td>
+                        <td>50</td>
+                        <td>0045678</td>
+                        <td>5</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>B10 - 205</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>

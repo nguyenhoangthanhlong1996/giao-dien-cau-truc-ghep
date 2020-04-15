@@ -1,4 +1,9 @@
 var tblTachGhep;
+var danhSachLoaiHinhLop = [
+    { id: 'CQ', text: 'CQ' },
+    { id: 'KCQ', text: 'KCQ' },
+    { id: 'CLC', text: 'CLC' },
+];
 
 $(document).ready(function () {
     const data = [
@@ -56,16 +61,14 @@ $(document).ready(function () {
         ],
         order: [[2, 'asc']],
         scrollX: true,
-        scrollY: '400px',
+        scrollY: '500px',
         scrollCollapse: true,
-        // fixedColumns: {
-        //     leftColumns: 3
-        // },
+        autowidth: false,
+        keys: true,
         columnDefs: [
             {
                 orderable: false,
                 searchable: false,
-                className: 'select',
                 targets: 0,
                 render: function (data, type, full, meta) {
                     return (
@@ -89,6 +92,134 @@ $(document).ready(function () {
                     return full.maMonHoc + ' - ' + full.tenMonHoc;
                 },
             },
+            {
+                targets: 3,
+                render: function (data, type, full, meta) {
+                    if (type === 'display') {
+                        let select = $('<select></select>');
+                        danhSachLoaiHinhLop.forEach((loaHinhLop) => {
+                            let option = $('<option></option>', {
+                                text: loaHinhLop.text,
+                                value: loaHinhLop.id,
+                            });
+                            if (data === loaHinhLop.id) {
+                                option.attr('selected', 'selected');
+                            }
+                            select.append(option);
+                        });
+                        return select.prop('outerHTML');
+                    } else {
+                        return data;
+                    }
+                },
+            },
+            // Các cột input kiểu số
+            {
+                targets: [
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24,
+                    25,
+                    27,
+                    28,
+                    30,
+                    31,
+                    32,
+                ],
+                render: function (data, type, full, meta) {
+                    if (type === 'display') {
+                        let input = $('<input/>', {
+                            class: 'input-integer',
+                        }).attr(
+                            'value',
+                            data && typeof data === 'number' ? data : null
+                        );
+                        return input.prop('outerHTML');
+                    } else {
+                        return data;
+                    }
+                },
+            },
+            // Các cột input kiểu chuỗi
+            {
+                targets: [10, 26, 29],
+                render: function (data, type, full, meta) {
+                    if (type === 'display') {
+                        let input = $('<input/>', { class: 'input-text' }).attr(
+                            'value',
+                            data ? data : null
+                        );
+                        return input.prop('outerHTML');
+                    } else {
+                        return data;
+                    }
+                },
+            },
+            // Các cột đánh dấu tuần học
+            {
+                targets: [
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    58,
+                    59,
+                    60,
+                    61,
+                    62,
+                    63,
+                    64,
+                ],
+                render: function (data, type, full, meta) {
+                    if (type === 'display') {
+                        let input = $('<input/>', { type: 'checkbox' }).attr(
+                            'value',
+                            data ? data : null
+                        );
+                        return input.prop('outerHTML');
+                    } else {
+                        return data;
+                    }
+                },
+            },
         ],
         rowId: 'id',
         columns: [
@@ -102,8 +233,8 @@ $(document).ready(function () {
             { data: 'siSoDaoDong', defaultContent: '--' },
             { data: 'siSoDuKien', defaultContent: '--' },
             { data: 'siSoThucTe', defaultContent: '--' },
-            { data: 'soTietTrongTuan', defaultContent: '--' },
             { data: 'nhomPhong', defaultContent: '--' },
+            { data: 'soTietTrongTuan', defaultContent: '--' },
             { data: 'PT1', defaultContent: '--' },
             { data: 'PT2', defaultContent: '--' },
             { data: 'PT3', defaultContent: '--' },
@@ -167,11 +298,8 @@ $(document).ready(function () {
 				<"col-sm-12"t>
 			>
 			<"row"
-                <"col-sm-3"i>
-                <"col-sm-6"
-                    <"#wrap-docs">
-                >
-				<"col-sm-3"p>
+                <"col-sm-6"i>
+				<"col-sm-6"p>
 			>`,
     });
 
@@ -180,7 +308,6 @@ $(document).ready(function () {
             $('#dropDownThaoTac').prop('outerHTML') +
             $('#tuyChonHienThiCot').prop('outerHTML')
     );
-    $('#wrap-docs').html('Nhấn đúp chuột vào 1 ô trong bảng để sửa giá trị tại ô đó');
 
     $('#select-all').on('change', function () {
         checkBoxChonTatCaThayDoi();
@@ -208,6 +335,15 @@ $(document).ready(function () {
         }
     });
 
+    $('#nhomCollapseAll').on('click', function () {
+        tblTachGhep
+            .rows(':not(.parent)')
+            .nodes()
+            .to$()
+            .find('td:nth-child(2)')
+            .trigger('click');
+    });
+
     // Xử lý sự kiện checkbox ở mỗi dòng thay đổi trạng thái
     $('#tblTachGhep').on(
         'change',
@@ -217,25 +353,11 @@ $(document).ready(function () {
         }
     );
 
-    $('#tblTachGhep').on('dblclick', 'tbody td', function () {
-        let cell = tblTachGhep.cell(this);
-        const td = $(cell.node());
-        if (!td.hasClass('editing')) {
-            const value = cell.data();
-            cell.data(`<input type="text"/>`).draw();
-            td.addClass('editing');
-            td.find('input').focus().val(value);
-        }
-    });
-
-    $('#tblTachGhep').on('keypress', 'tbody td.editing', function (e) {
-        if (e.keyCode == 13) {
-            const cell = tblTachGhep.cell(this);
-            const td = $(cell.node());
-            const value = td.find('input').val();
-            cell.data(value.trim() ? value : null).draw();
-            td.removeClass('editing');
-        }
+    // Ngăn chặn các input nhập giá trị khác số nguyên
+    $('#tblTachGhep').on('keyup', 'input.input-integer', function () {
+        let value = this.value;
+        value = value.replace(/\D/g, '');
+        $(this).val(value);
     });
 
     $('#tblTachGhep').on('focusout', 'tbody td.editing input', function (e) {
@@ -245,41 +367,29 @@ $(document).ready(function () {
     // Xử lý sự kiện ẩn hiện cột
     $('#tuyChonHienThiCot').on('change', 'input[type="checkbox"]', function () {
         const checkbox = $(this);
-        const value = checkbox.val();
+        const id = checkbox.attr('id');
         const isChecked = checkbox.prop('checked');
-        switch (value) {
-            case 'tongSoTiet':
+        switch (id) {
+            case 'checkTongSoTiet':
                 tblTachGhep.column(4).visible(isChecked);
                 break;
-            case 'siSo':
+            case 'checkSiSo':
                 tblTachGhep.columns([5, 6, 7, 8, 9]).visible(isChecked);
                 break;
-            case 'chiaTietTKB':
+            case 'checkChiaTietTKB':
                 tblTachGhep
-                    .columns([
-                        10,
-                        11,
-                        12,
-                        13,
-                        14,
-                        15,
-                        16,
-                        17,
-                        18,
-                        19,
-                        20,
-                        21,
-                        22,
-                        23,
-                        24,
-                        25,
-                    ])
+                    .columns([10, 11, 12, 13, 14, 15, 16])
                     .visible(isChecked);
                 break;
-            case 'chiDinhGV':
+            case 'checkChiaTiet_PT6_PT14':
+                tblTachGhep
+                    .columns([17, 18, 19, 20, 21, 22, 23, 24, 25])
+                    .visible(isChecked);
+                break;
+            case 'checkChiDinhGV':
                 tblTachGhep.columns([26, 27, 28, 29]).visible(isChecked);
                 break;
-            case 'chiDinhTuan':
+            case 'checkChiDinhTuan':
                 tblTachGhep
                     .columns([
                         30,
@@ -300,6 +410,12 @@ $(document).ready(function () {
                         45,
                         46,
                         47,
+                    ])
+                    .visible(isChecked);
+                break;
+            case 'checkChiDinhTuan_T16_T32':
+                tblTachGhep
+                    .columns([
                         48,
                         49,
                         50,
@@ -325,33 +441,111 @@ $(document).ready(function () {
         }
     });
 
-    $(document).bind('keydown', 'ctrl+a', function (e) {
-        e.preventDefault();
-        $('#select-all').prop('checked', true).trigger('change');
-    });
-    $(document).bind('keydown', 'ctrl+shift+a', function (e) {
-        e.preventDefault();
-        $('#select-all').prop('checked', false).trigger('change');
-    });
+    // $('#tblTachGhep').on('keydown', 'td', function (e) {
+    //     const key = e.key;
+      
+    //     if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].includes(key)) {
+    //         let targetMove = null;
+    //         let indexCol = null;
+    //         // e.preventDefault();
+    //         switch (key) {
+    //             case 'ArrowRight':
+    //                 targetMove = $(this).next().children();
+    //                 break;
+    //             case 'ArrowLeft':
+    //                 targetMove = $(this).prev().children();
+    //                 break;
+    //             case 'ArrowUp':
+    //                 indexCol = $(this).index() + 1;
+    //                 const trAbove = $(this).parent('tr').prev();
+    //                 targetMove = trAbove
+    //                     .children('td:nth-child(' + indexCol + ')')
+    //                     .children();
+    //                 break;
+    //             case 'ArrowDown':
+    //                 indexCol = $(this).index() + 1;
+    //                 const trBelow = $(this).parent('tr').next();
+    //                 targetMove = trBelow
+    //                     .children('td:nth-child(' + indexCol + ')')
+    //                     .children();
+    //                 break;
+    //         }
+    //         if (targetMove.is('input') || targetMove.is('select')) {
+    //             targetMove.select();;
+    //         }
+    //     }
+    // });
 
-    $(document).bind('keydown', function (e) {
-        const key = e.key;
-        if (['F1', 'F2', 'F3', 'Delete', 'F4', 'F6', 'F7'].includes(key)) {
-            e.preventDefault();
-            switch (key) {
-                case 'F1':
-                    $('#dropDownThaoTac').toggleClass('open');
-                    $('#dropDownThaoTac button').focus();
-                    break;
-                case 'F2':
-                    $('.dataTables_filter input[type="search"]').focus();
-                    break;
-            }
+    $('#tblTachGhep').on('keydown', 'input', 'ctrl+right', function (e) {
+        e.preventDefault();
+        const target = $(this).parent().next().children();
+        if (target.is('input')) {
+            target.select();
+        }
+    });
+    $('#tblTachGhep').on('keydown', 'input', 'ctrl+left', function (e) {    
+        e.preventDefault();
+        const target = $(this).parent().prev().children();
+        if (target.is('input')) {
+            target.select();
+        }
+    });
+    $('#tblTachGhep').on('keydown', 'input', 'ctrl+up', function (e) {
+        e.preventDefault();
+        const td = $(this).parent();
+        const indexCol = td.index() + 1;
+        const trAbove = td.parent('tr').prev();
+        const target = trAbove.children('td:nth-child(' + indexCol + ')') .children();
+        if (target.is('input')) {
+            target.select();
+        }
+    });
+    $('#tblTachGhep').on('keydown', 'input', 'ctrl+down', function (e) {
+        e.preventDefault();
+        const td = $(this).parent();
+        const indexCol = td.index() + 1;
+        const trAbove = td.parent('tr').next();
+        const target = trAbove.children('td:nth-child(' + indexCol + ')') .children();
+        if (target.is('input')) {
+            target.select();
         }
     });
 
+    // $(document).bind('keydown', 'ctrl+a', function (e) {
+    //     e.preventDefault();
+    //     $('#select-all').prop('checked', true).trigger('change');
+    // });
+    // $(document).bind('keydown', 'ctrl+shift+a', function (e) {
+    //     e.preventDefault();
+    //     $('#select-all').prop('checked', false).trigger('change');
+    // });
+
+    // $(document).bind('keydown', function (e) {
+    //     const key = e.key;
+    //     if (['F1', 'F2', 'F3', 'Delete', 'F4', 'F6', 'F7'].includes(key)) {
+    //         e.preventDefault();
+    //         switch (key) {
+    //             case 'F1':
+    //                 $('#dropDownThaoTac').toggleClass('open');
+    //                 $('#dropDownThaoTac button').focus();
+    //                 break;
+    //             case 'F2':
+    //                 $('.dataTables_filter input[type="search"]').focus();
+    //                 break;
+    //         }
+    //     }
+    //     if (key === 'ArrowRight') {
+    //         console.log(tblTachGhep.cells($(':focus')));
+    //     }
+
+    // });
+
     // Mặc định hiển thị tất cả cột
-    $('#tuyChonHienThiCot input[type="checkbox"]').prop('checked', true);
+    $('#tuyChonHienThiCot input[type="checkbox"]')
+        .prop('checked', true)
+        .trigger('change');
+    $('#checkChiaTiet_PT6_PT14').prop('checked', false).trigger('change');
+    $('#checkChiDinhTuan_T16_T32').prop('checked', false).trigger('change');
 });
 
 function soDongDuocChonThayDoi() {
