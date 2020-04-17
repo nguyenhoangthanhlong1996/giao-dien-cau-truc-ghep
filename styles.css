@@ -1,33 +1,29 @@
-.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(-n+3) {
+/* Bảng môn học */
+.table-scroll {
+    width: 100%;
+    overflow-x: scroll;
+}
+#tblTachGhep > tbody > tr > td:nth-child(-n+3), 
+#tblTachGhep > thead > tr:first-child > th:nth-child(-n+3),
+#tblTachGhep > tfoot > tr:first-child > th:nth-child(-n+3) {
     position: sticky;
     background-color: white;
-    z-index: 2;
+    z-index: 3;
 }
-.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(1) {
+#tblTachGhep > tbody > tr > td:nth-child(1),
+#tblTachGhep > thead > tr:first-child > th:nth-child(1),
+#tblTachGhep > tfoot > tr:first-child > th:nth-child(1) {
     left: 0;
 }
-.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(2) {
+#tblTachGhep > tbody > tr > td:nth-child(2),
+#tblTachGhep > thead > tr:first-child > th:nth-child(2),
+#tblTachGhep > tfoot > tr:first-child > th:nth-child(2) {
     left: 52px;
 }
-.dataTables_scrollHeadInner > table > thead > tr:first-child > th:nth-child(3) {
+#tblTachGhep > tbody > tr > td:nth-child(3),
+#tblTachGhep > thead > tr:first-child > th:nth-child(3),
+#tblTachGhep > tfoot > tr:first-child > th:nth-child(3) {
     left: 120px;
-}
-#tblTachGhep tr td:first-child {
-    text-align: center;
-}
-#tblTachGhep thead > tr:nth-child(2) > th:last-child {
-    border-right-width: 1px;
-}
-#tblTachGhep > tbody > tr > td {
-    padding: 5px;
-    vertical-align: middle;
-}
-#tblTachGhep > tbody > tr > td:not(:nth-child(-n+3)) {
-    text-align: center;
-}
-#tblTachGhep > tbody > tr > td:nth-child(-n+3) {
-    position: sticky;
-    z-index: 2;
 }
 #tblTachGhep > tbody > tr:nth-child(odd) > td:nth-child(-n+3) {
     background-color: #f9f9f9;
@@ -35,16 +31,28 @@
 #tblTachGhep > tbody > tr:nth-child(even) > td:nth-child(-n+3) {
     background-color: white;
 }
-#tblTachGhep > tbody > tr > td:nth-child(1) {
-    left: 0;
+#tblTachGhep thead > tr:nth-child(2) > th:last-child {
+    border-right-width: 1px;
 }
-#tblTachGhep > tbody > tr > td:nth-child(2) {
-    left: 52px;
+#tblTachGhep > tbody > tr > td:nth-child(-n+2),
+#tblTachGhep > tfoot > tr > th {
+    text-align: center;
 }
-#tblTachGhep > tbody > tr > td:nth-child(3) {
-    left: 120px;
+#tblTachGhep > tfoot > tr > th > * {
+    width: 100%;
 }
-.dataTables_scrollHeadInner table thead tr th {
+#tblTachGhep > tbody > tr > td {
+    padding: 5px;
+    vertical-align: middle;
+}
+#tblTachGhep > tfoot > tr > th > * {
+    width: 100%;
+    font-weight: normal;
+}
+#tblTachGhep > tbody > tr > td.edited {
+    border: solid 1px orange;
+}
+#tblTachGhep thead tr th {
     text-align: center;
     border-bottom: none;
 }
@@ -82,10 +90,6 @@ div.dataTables_wrapper div.dataTables_length label, div.dataTables_filter label 
 }
 td.details-control {
     cursor: pointer;
-    text-align: center;
-}
-table.table-nhom-lop thead tr th {
-    text-align: center;
 }
 input.input-integer {
     width: 50px;
@@ -94,4 +98,57 @@ input.input-integer {
 input.input-text {
     width: 80px;
     text-align: left;
+}
+/* Bảng nhóm lớp */
+table.table-nhom-lop > thead > tr > th {
+    text-align: center;
+}
+/* Dropup checkbox lọc */
+.dropup-filter > button {
+    height: 27px;
+    width: 100%;
+}
+.dropup-filter > ul.dropdown-menu {
+    width: 100%;
+    min-width: 200px;
+}
+.dropup-filter > ul.dropdown-menu > li > input {
+    width: calc(100% - 10px);
+}
+.dropup-filter > button > span.caret {
+    margin-top: -8px;
+}
+.checkbox-menu {
+    z-index: 2;
+}
+.checkbox-menu li label {
+    display: block;
+    padding: 3px 10px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+    margin:0;
+    transition: background-color .4s ease;
+}
+.checkbox-menu li:last-child {
+    padding: 0 5px 0 5px;
+}
+.checkbox-menu li input {
+    margin: 0px 5px;
+    top: 2px;
+    position: relative;
+}
+.checkbox-menu li.active label {
+    background-color: #cbcbff;
+    font-weight:bold;
+}
+.checkbox-menu li label:hover,
+.checkbox-menu li label:focus {
+    background-color: #f5f5f5;
+}
+.checkbox-menu li.active label:hover,
+.checkbox-menu li.active label:focus {
+    background-color: #b8b8ff;
 }
