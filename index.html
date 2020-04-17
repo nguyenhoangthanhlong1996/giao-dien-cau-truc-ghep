@@ -44,7 +44,7 @@
                     <th rowspan="2">Dự kiến</th>
                     <th rowspan="2">Thực tế</th>
                     <th rowspan="2">Nhóm phòng</th>
-                    <th rowspan="2">Tiết/Tuần</th>
+                    <th rowspan="2">Tiết / Tuần</th>
                     <th colspan="14">Số tiết / Lần gặp</th>
                     <th rowspan="2">Mã GV</th>
                     <th rowspan="2">Thứ</th>
@@ -170,6 +170,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tfoot>
         </table>
         <!-- Các controls sẽ tùy biến vào DataTable -->
@@ -226,6 +227,7 @@
                 <thead>
                     <tr>
                         <th><input type="checkbox"></th>
+                        <th>#</th>
                         <th>Mã nhóm</th>
                         <th>Sĩ số</th>
                         <th>Mã GV</th>
@@ -253,6 +255,18 @@
                 <tbody>
                     <tr>
                         <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-xs dropdown-toggle"
+                                    data-toggle="dropdown">
+                                    <span class="caret"></span> <span class="sr-only">Tùy chọn</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    
+                                    <li><a href="#"><span>Danh sách Sinh viên</span></a></li>
+                                </ul>
+                            </div>
+                        </td>
                         <td>A01</td>
                         <td>45</td>
                         <td>0012345</td>
@@ -278,6 +292,18 @@
                     </tr>
                     <tr>
                         <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-xs dropdown-toggle"
+                                    data-toggle="dropdown">
+                                    <span class="caret"></span> <span class="sr-only">Tùy chọn</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    
+                                    <li><a href="#"><span>Danh sách Sinh viên</span></a></li>
+                                </ul>
+                            </div>
+                        </td>
                         <td>A02</td>
                         <td>50</td>
                         <td>0045678</td>
@@ -303,40 +329,58 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="dropup dropup-filter">
-                <button class="btn btn-default" type="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true" style="width: 100%; height: 27px;">
+            <div class="dropup dropup-filter filter-checkbox">
+                <button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="true" style="width: 100%; height: 27px;">
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu checkbox-menu">
-                    <!-- <li class="allow-focus">
-                        <label>
-                            <input type="checkbox"> Tất cả
-                        </label>
-                    </li>
-                    <li class="allow-focus">
-                        <label>
-                            <input type="checkbox"> CQ
-                        </label>
-                    </li>
-        
-                    <li class="allow-focus">
-                        <label>
-                            <input type="checkbox"> KCQ
-                        </label>
-                    </li>
-        
-                    <li class="allow-focus">
-                        <label>
-                            <input type="checkbox"> CLC
-                        </label>
-                    </li> -->
                     <li class="divider"></li>
                     <li>
-                        <button class="btn btn-warning pull-left">Hủy</button>
-                        <button class="btn btn-success pull-right">Lọc</button>
+                        <button class="btn btn-warning pull-left clear-filter">Hủy</button>
+                        <button class="btn btn-success pull-right apply-filter">Lọc</button>
                     </li>
-                    
+
+                </ul>
+            </div>
+            <div class="dropup dropup-filter filter-text">
+                <button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="true" style="width: 100%; height: 27px;">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    <li>
+                        <input type="text" class="form-control" placeholder="Chuỗi cần tìm" />
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <button class="btn btn-warning pull-left clear-filter">Hủy</button>
+                        <button class="btn btn-success pull-right apply-filter">Lọc</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup dropup-filter filter-number">
+                <button class="btn btn-default" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="true" style="width: 100%; height: 27px;">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu checkbox-menu">
+                    <li class="allow-focus">
+                        <select class="form-control" placeholder="Loại so sánh">
+                            <option value="eq"> = </option>
+                            <option value="neq"> != </option>
+                            <option value="lt"> &lt; </option>
+                            <option value="lte"> &lt;= </option>
+                            <option value="gt"> &gt; </option>
+                            <option value="gte"> &gt;= </option>
+                        </select>
+                        <input type="text" class="form-control input-integer" placeholder="Giá trị" />
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <button class="btn btn-warning pull-left clear-filter">Hủy</button>
+                        <button class="btn btn-success pull-right apply-filter">Lọc</button>
+                    </li>
                 </ul>
             </div>
         </div>

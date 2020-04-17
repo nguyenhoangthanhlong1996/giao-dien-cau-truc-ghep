@@ -61,18 +61,13 @@ $(document).ready(function () {
         ],
         order: [[2, 'asc']],
         autowidth: false,
-        keys: true,
         columnDefs: [
             {
                 orderable: false,
                 searchable: false,
                 targets: 0,
                 render: function (data, type, full, meta) {
-                    return (
-                        '<input type="checkbox" value="' +
-                        $('<div/>').text(data.maMonHoc).html() +
-                        '">'
-                    );
+                    return '<input type="checkbox" value="' + $('<div/>').text(data.maMonHoc).html() + '">';
                 },
             },
             {
@@ -93,7 +88,9 @@ $(document).ready(function () {
                 targets: 3,
                 render: function (data, type, full, meta) {
                     if (type === 'display') {
-                        let select = $('<select></select>');
+                        let select = $('<select></select>', {
+                            class: 'form-control',
+                        });
                         danhSachLoaiHinhLop.forEach((loaHinhLop) => {
                             let option = $('<option></option>', {
                                 text: loaHinhLop.text,
@@ -112,45 +109,15 @@ $(document).ready(function () {
             },
             // Các cột input kiểu số
             {
-                targets: [
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24,
-                    25,
-                    27,
-                    28,
-                    30,
-                    31,
-                    32,
-                ],
+                targets: [4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 32],
                 createdCell: function (td, cellData, rowData, row, col) {
                     $(td).attr('data-value', cellData);
                 },
                 render: function (data, type, full, meta) {
                     if (type === 'display') {
                         let input = $('<input/>', {
-                            class: 'input-integer',
-                        }).attr(
-                            'value',
-                            data && typeof data === 'number' ? data : null
-                        );
+                            class: 'form-control input-integer',
+                        }).attr('value', data && typeof data === 'number' ? data : null);
                         return input.prop('outerHTML');
                     } else {
                         return data;
@@ -165,10 +132,9 @@ $(document).ready(function () {
                 },
                 render: function (data, type, full, meta) {
                     if (type === 'display') {
-                        let input = $('<input/>', { class: 'input-text' }).attr(
-                            'value',
-                            data ? data : null
-                        );
+                        let input = $('<input/>', {
+                            class: 'form-control input-text',
+                        }).attr('value', data ? data : null);
                         return input.prop('outerHTML');
                     } else {
                         return data;
@@ -177,49 +143,13 @@ $(document).ready(function () {
             },
             // Các cột đánh dấu tuần học
             {
-                targets: [
-                    33,
-                    34,
-                    35,
-                    36,
-                    37,
-                    38,
-                    39,
-                    40,
-                    41,
-                    42,
-                    43,
-                    44,
-                    45,
-                    46,
-                    47,
-                    48,
-                    49,
-                    50,
-                    51,
-                    52,
-                    53,
-                    54,
-                    55,
-                    56,
-                    57,
-                    58,
-                    59,
-                    60,
-                    61,
-                    62,
-                    63,
-                    64,
-                ],
+                targets: [33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64],
                 createdCell: function (td, cellData, rowData, row, col) {
                     $(td).attr('data-value', cellData);
                 },
                 render: function (data, type, full, meta) {
                     if (type === 'display') {
-                        let input = $('<input/>', { type: 'checkbox' }).attr(
-                            'value',
-                            true
-                        );
+                        let input = $('<input/>', { type: 'checkbox' }).attr('value', true);
                         if (data) {
                             input.attr('checked', true);
                         }
@@ -301,33 +231,56 @@ $(document).ready(function () {
         dom: `<"flex-wrap-controls"
 				l
 				<"#wrap-funtions">
-				f
+				
 			>
 			<"table-scroll"t>
 			<"row"
-                <"col-sm-6"i>
-				<"col-sm-6"p>
+                <"col-sm-3"i>
+                <"col-sm-6"
+                    <"#wrap-docs">
+                >
+				<"col-sm-3"p>
 			>`,
     });
 
-    let dropupFilter = $('.dropup-filter');
-    // Tạo filter cột Môn học
-    const filterMonHoc = dropupFilter.clone();
-    filterMonHoc.find('.dropdown-menu').prepend('<li><input class="form-control" placeholder="Mã hoặc Tên môn học" /></li>');
-    $(tblTachGhep.column(2).footer()).html(filterMonHoc.prop('outerHTML'));
+    const filterCheckbox = $('.filter-checkbox');
     // Tạo filter cột loại hình lớp
-    const filterLoaiHinhLop = dropupFilter.clone();
-    const htmlLoaiHinhLop = danhSachLoaiHinhLop.map(loaHinhLop => `<li class="allow-focus"><label><input type="checkbox"/> ${loaHinhLop.text}</label></li>`).join('');
+    const filterLoaiHinhLop = filterCheckbox.clone();
+    const htmlLoaiHinhLop = danhSachLoaiHinhLop.map((loaHinhLop) => `<li class="allow-focus"><label><input type="checkbox"/> ${loaHinhLop.text}</label></li>`).join('');
     filterLoaiHinhLop.find('.dropdown-menu').prepend(htmlLoaiHinhLop);
     $(tblTachGhep.column(3).footer()).html(filterLoaiHinhLop.prop('outerHTML'));
-    
+    // Tạo filter các cột kiểu chuỗi
+    const filterText = $('.filter-text');
+    $(tblTachGhep.columns([2, 10, 26, 29]).footer()).html(filterText.prop('outerHTML'));
+    // Tạo filter các cột thuộc kiểu số
+    const filterNumber = $('.filter-number');
+    $(tblTachGhep.columns([4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 30, 31, 32]).footer()).html(filterNumber.prop('outerHTML'));
+    // Tạo filter các cột đánh dấu tuần học
+    const filterTuanHoc = filterCheckbox.clone();
+    const htmlTuanHoc = '<li class="allow-focus"><label><input type="checkbox"/> Có</label></li><li class="allow-focus"><label><input type="checkbox"/> Không</label></li>';
+    filterTuanHoc.find('.dropdown-menu').prepend(htmlTuanHoc);
+    $(tblTachGhep.columns([33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]).footer()).html(filterTuanHoc.prop('outerHTML'));
+
+    // Sự kiện bỏ điều kiện lọc
+    $('#tblTachGhep').on('click', 'tfoot button.clear-filter', function () {
+        const parent = $(this).closest('.dropup-filter');
+        if (parent.hasClass('filter-text') || parent.hasClass('filter-number')) {
+            parent.find('input').val(null);
+        } else {
+            parent.find(':checkbox').prop('checked', false).trigger('change');
+        }
+    });
+    // Sự kiện kích hoạt điều kiện lọc
+    $('#tblTachGhep').on('click', 'tfoot button.apply-filter', function () {
+        const parent = $(this).closest('.dropup-filter');
+        if (parent.hasClass('filter-text') || parent.hasClass('filter-number')) {
+            parent.find('input').val(null);
+        }
+    });
 
     // Thêm các control vào bảng
-    $('#wrap-funtions').html(
-        $('#soDongDuocChon').prop('outerHTML') +
-            $('#dropDownThaoTac').prop('outerHTML') +
-            $('#tuyChonHienThiCot').prop('outerHTML')
-    );
+    $('#wrap-funtions').html($('#soDongDuocChon').prop('outerHTML') + $('#dropDownThaoTac').prop('outerHTML') + $('#tuyChonHienThiCot').prop('outerHTML'));
+    $('#wrap-docs').html('Ctrl + phím mũi tên để di chuyển giữa các ô');
 
     // Sự kiện chọn tất cả
     $('#select-all').on('change', function () {
@@ -342,38 +295,23 @@ $(document).ready(function () {
         if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
-            $(this)
-                .find('i')
-                .addClass('fa-plus-square text-primary')
-                .removeClass('fa-minus-square text-success');
+            $(this).find('i').addClass('fa-plus-square text-primary').removeClass('fa-minus-square text-success');
         } else {
             // Open this row
             row.child($('#tblNhomLop').prop('outerHTML')).show();
-            $(this)
-                .find('i')
-                .addClass('fa-minus-square text-success')
-                .removeClass('fa-plus-square text-primary');
+            $(this).find('i').addClass('fa-minus-square text-success').removeClass('fa-plus-square text-primary');
         }
     });
 
     // Sự kiện đóng/mở tất cả nhóm lớp
     $('#nhomCollapseAll').on('click', function () {
-        tblTachGhep
-            .rows(':not(.parent)')
-            .nodes()
-            .to$()
-            .find('td:nth-child(2)')
-            .trigger('click');
+        tblTachGhep.rows(':not(.parent)').nodes().to$().find('td:nth-child(2)').trigger('click');
     });
 
     // Xử lý sự kiện checkbox ở mỗi dòng thay đổi trạng thái
-    $('#tblTachGhep').on(
-        'change',
-        'tbody td input[type="checkbox"]',
-        function () {
-            soDongDuocChonThayDoi();
-        }
-    );
+    $('#tblTachGhep').on('change', 'tbody td input[type="checkbox"]', function () {
+        soDongDuocChonThayDoi();
+    });
 
     // Ngăn chặn các input nhập giá trị khác số nguyên
     $('#tblTachGhep').on('keyup', 'input.input-integer', function () {
@@ -399,64 +337,19 @@ $(document).ready(function () {
                 tblTachGhep.columns([5, 6, 7, 8, 9]).visible(isChecked);
                 break;
             case 'checkChiaTietTKB':
-                tblTachGhep
-                    .columns([10, 11, 12, 13, 14, 15, 16])
-                    .visible(isChecked);
+                tblTachGhep.columns([10, 11, 12, 13, 14, 15, 16]).visible(isChecked);
                 break;
             case 'checkChiaTiet_PT6_PT14':
-                tblTachGhep
-                    .columns([17, 18, 19, 20, 21, 22, 23, 24, 25])
-                    .visible(isChecked);
+                tblTachGhep.columns([17, 18, 19, 20, 21, 22, 23, 24, 25]).visible(isChecked);
                 break;
             case 'checkChiDinhGV':
                 tblTachGhep.columns([26, 27, 28, 29]).visible(isChecked);
                 break;
             case 'checkChiDinhTuan':
-                tblTachGhep
-                    .columns([
-                        30,
-                        31,
-                        32,
-                        33,
-                        34,
-                        35,
-                        36,
-                        37,
-                        38,
-                        39,
-                        40,
-                        41,
-                        42,
-                        43,
-                        44,
-                        45,
-                        46,
-                        47,
-                    ])
-                    .visible(isChecked);
+                tblTachGhep.columns([30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]).visible(isChecked);
                 break;
             case 'checkChiDinhTuan_T16_T32':
-                tblTachGhep
-                    .columns([
-                        48,
-                        49,
-                        50,
-                        51,
-                        52,
-                        53,
-                        54,
-                        55,
-                        56,
-                        57,
-                        58,
-                        59,
-                        60,
-                        61,
-                        62,
-                        63,
-                        64,
-                    ])
-                    .visible(isChecked);
+                tblTachGhep.columns([48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]).visible(isChecked);
                 break;
             default:
                 break;
@@ -483,9 +376,7 @@ $(document).ready(function () {
         const td = $(this).parent();
         const indexCol = td.index() + 1;
         const trAbove = td.parent('tr').prev();
-        const target = trAbove
-            .children('td:nth-child(' + indexCol + ')')
-            .children();
+        const target = trAbove.children('td:nth-child(' + indexCol + ')').children();
         if (target.length > 0) {
             controlFocus(target);
         }
@@ -495,9 +386,7 @@ $(document).ready(function () {
         const td = $(this).parent();
         const indexCol = td.index() + 1;
         const trAbove = td.parent('tr').next();
-        const target = trAbove
-            .children('td:nth-child(' + indexCol + ')')
-            .children();
+        const target = trAbove.children('td:nth-child(' + indexCol + ')').children();
         if (target.length > 0) {
             controlFocus(target);
         }
@@ -527,43 +416,38 @@ $(document).ready(function () {
     });
 
     // Mặc định hiển thị tất cả cột
-    $('#tuyChonHienThiCot input[type="checkbox"]')
-        .prop('checked', true)
-        .trigger('change');
+    $('#tuyChonHienThiCot input[type="checkbox"]').prop('checked', true).trigger('change');
     $('#checkChiaTiet_PT6_PT14').prop('checked', false).trigger('change');
     $('#checkChiDinhTuan_T16_T32').prop('checked', false).trigger('change');
 
     // Xử lý khi các control thay đổi giá trị
-    $('#tblTachGhep').on(
-        'change',
-        'tbody td:not(:nth-child(-n+3)) input',
-        function () {
-            const jInput = $(this);
-            const td = jInput.closest('td');
-            let oldValue, newValue;
-            if (jInput.is(':checkbox')) {
-                oldValue = td.attr('data-value');
-                oldValue = oldValue === 'true' ? true : false;
-                newValue = jInput.prop('checked');
-            } else {
-                oldValue = getValue(td.attr('data-value'), null);
-                newValue = getValue(this.value, null);
-            }
-            console.log(oldValue, newValue, oldValue === newValue);
-            if (oldValue !== newValue) {
-                td.addClass('edited');
-            } else {
-                td.removeClass('edited');
-            }
+    $('#tblTachGhep').on('change', 'tbody td:not(:nth-child(-n+3)) input', function () {
+        const jInput = $(this);
+        const td = jInput.closest('td');
+        let oldValue, newValue;
+        if (jInput.is(':checkbox')) {
+            oldValue = td.attr('data-value');
+            oldValue = oldValue === 'true' ? true : false;
+            newValue = jInput.prop('checked');
+        } else {
+            oldValue = getValue(td.attr('data-value'), null);
+            newValue = getValue(this.value, null);
         }
-    );
+        if (oldValue !== newValue) {
+            td.addClass('edited');
+        } else {
+            td.removeClass('edited');
+        }
+    });
 
     // Dropdown checkbox lọc
-    $('.checkbox-menu').on('change', "input[type='checkbox']", function () {
-        $(this).closest('li').toggleClass('active', this.checked);
-    });
     $(document).on('click', '.allow-focus', function (e) {
         e.stopPropagation();
+    });
+
+    // Sự kiện dropdown thao tác mở
+    $(document).on('show.bs.dropdown', '#dropDownThaoTac', function (event) {
+        
     });
 });
 
@@ -585,22 +469,7 @@ function checkBoxChonTatCaThayDoi() {
 }
 
 function htmlBangNhomLop(id) {
-    return (
-        '<table class="table table-bordered">' +
-        '<tr>' +
-        '<td>Full name:</td>' +
-        '<td>ABC</td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td>Extension number:</td>' +
-        '<td>DEF</td>' +
-        '</tr>' +
-        '<tr>' +
-        '<td>Extra info:</td>' +
-        '<td>And any further details here (images etc)...</td>' +
-        '</tr>' +
-        '</table>'
-    );
+    return '<table class="table table-bordered">' + '<tr>' + '<td>Full name:</td>' + '<td>ABC</td>' + '</tr>' + '<tr>' + '<td>Extension number:</td>' + '<td>DEF</td>' + '</tr>' + '<tr>' + '<td>Extra info:</td>' + '<td>And any further details here (images etc)...</td>' + '</tr>' + '</table>';
 }
 
 function controlFocus(target) {
