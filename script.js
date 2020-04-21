@@ -6,47 +6,6 @@ var danhSachLoaiHinhLop = [
 ];
 
 $(document).ready(function () {
-    const data = [
-        {
-            maMonHoc: 'ABC123',
-            loaHinhLop: 'Chính quy',
-            tongSoTiet: 45,
-            siSoToiThieu: 0,
-            siSoToiDa: 200,
-            siSoDaoDong: 10,
-            siSoDuKien: 100,
-            siSoThucTe: 150,
-            lopThanhPhan: 'Lý thuyết',
-            nhom: 'A01',
-            siSoNhom: 100,
-        },
-        {
-            maMonHoc: 'ABC123',
-            loaHinhLop: 'Chính quy',
-            tongSoTiet: 40,
-            siSoToiThieu: 0,
-            siSoToiDa: 200,
-            siSoDaoDong: 10,
-            siSoDuKien: 50,
-            siSoThucTe: 70,
-            lopThanhPhan: 'Lý thuyết',
-            nhom: 'A01',
-            siSoNhom: 50,
-        },
-        {
-            maMonHoc: 'DEF456',
-            loaHinhLop: 'Không Chính quy',
-            tongSoTiet: 35,
-            siSoToiThieu: 0,
-            siSoToiDa: 200,
-            siSoDaoDong: 10,
-            siSoDuKien: 80,
-            siSoThucTe: 60,
-            lopThanhPhan: 'Lý thuyết',
-            nhom: 'A01',
-            siSoNhom: 30,
-        },
-    ];
 
     tblTachGhep = $('#tblTachGhep').DataTable({
         // data: data,
